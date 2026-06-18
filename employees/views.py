@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Employee
 from .forms import EmployeeForm
 
@@ -26,3 +26,15 @@ def employee_add(request):
                   'employees/add_employee.html',
                   {'form': form}
                   )
+
+
+def edit_employee(request, id):
+    employee = get_object_or_404(Employee, id=id)
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, instance=employee)
+        if form.is_valid():
+            form.save()
+    else:
+        form = EmployeeForm(instance=employee)
+
+    return render(request, 'employees/edit_employee.html', {'form': form})
