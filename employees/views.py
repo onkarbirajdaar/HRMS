@@ -38,3 +38,17 @@ def edit_employee(request, id):
         form = EmployeeForm(instance=employee)
 
     return render(request, 'employees/edit_employee.html', {'form': form})
+
+
+def delete_employee(request, id):
+    employee = get_object_or_404(Employee, id=id)
+
+    if request.method == 'POST':
+        employee.delete()
+        return redirect('employee_list')
+
+    return render(
+        request,
+        'employees/delete_employee.html',
+        {'employee': employee}
+    )
