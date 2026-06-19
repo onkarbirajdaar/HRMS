@@ -9,6 +9,7 @@
   </head>
   <body>
     <h1>Employee List</h1>
+    <a href="{% url 'logout' %}" class="btn btn-danger"> Logout </a>
 
     <table class="table">
       <thead>
@@ -24,14 +25,7 @@
           <td>{{ employee.first_name }} {{ employee.last_name }}</td>
           <td>{{ employee.email }}</td>
           <td>{{ employee.department }}</td>
-          <td>
-            <a
-              href="{% url 'edit_employee' employee.id %}"
-              class="btn btn-warning"
-            >
-              Edit
-            </a>
-          </td>
+
           <td>
             <a
               href="{% url 'edit_employee' employee.id %}"
