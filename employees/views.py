@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Employee
+from .models import Department, Employee
 from .forms import EmployeeForm
 from django.contrib.auth.decorators import login_required
 
@@ -57,3 +57,14 @@ def delete_employee(request, id):
         'employees/delete_employee.html',
         {'employee': employee}
     )
+
+
+@login_required
+def dashboard(request):
+    employee_count = Employee.objects.count()
+    department_count = Department.objects.count()
+    context = {
+        'employee_count': employee_count,
+        'department_count': department_count
+    }
+    return render(request, 'employees/dashboard.html', context)
