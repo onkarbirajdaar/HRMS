@@ -67,4 +67,5 @@ def dashboard(request):
         'employee_count': employee_count,
         'department_count': department_count
     }
+
     return render(request, 'employees/dashboard.html', context)
