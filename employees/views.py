@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Department, Employee
+from .models import Attendance, Department, Employee
 from .forms import EmployeeForm
 from django.contrib.auth.decorators import login_required
 
@@ -69,3 +69,14 @@ def dashboard(request):
     }
 
     return render(request, 'employees/dashboard.html', context)
+
+
+def attendance_list(request):
+
+    attendance_records = Attendance.objects.all()
+
+    return render(
+        request,
+        'employees/attendance_list.html',
+        {'attendance_records': attendance_records}
+    )
