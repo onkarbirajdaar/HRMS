@@ -100,3 +100,31 @@ def add_attendance(request):
         'employees/add_attendance.html',
         {'form': form}
     )
+
+
+def edit_attendance(request, id):
+
+    attendance = get_object_or_404(
+        Attendance,
+        id=id
+    )
+
+    if request.method == 'POST':
+
+        form = AttendanceForm(
+            request.POST,
+            instance=attendance
+        )
+
+        if form.is_valid():
+            form.save()
+            return redirect('attendance_list')
+
+    else:
+        form = AttendanceForm(instance=attendance)
+
+    return render(
+        request,
+        'employees/edit_attendance.html',
+        {'form': form}
+    )
