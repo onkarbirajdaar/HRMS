@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Attendance, Department, Employee
-from .forms import EmployeeForm
+from .forms import EmployeeForm, AttendanceForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -79,4 +79,24 @@ def attendance_list(request):
         request,
         'employees/attendance_list.html',
         {'attendance_records': attendance_records}
+    )
+
+
+def add_attendance(request):
+
+    if request.method == 'POST':
+
+        form = AttendanceForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('attendance_list')
+
+    else:
+        form = AttendanceForm()
+
+    return render(
+        request,
+        'employees/add_attendance.html',
+        {'form': form}
     )
