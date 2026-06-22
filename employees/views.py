@@ -128,3 +128,21 @@ def edit_attendance(request, id):
         'employees/edit_attendance.html',
         {'form': form}
     )
+
+
+def delete_attendance(request, id):
+
+    attendance = get_object_or_404(
+        Attendance,
+        id=id
+    )
+
+    if request.method == 'POST':
+        attendance.delete()
+        return redirect('attendance_list')
+
+    return render(
+        request,
+        'employees/delete_attendance.html',
+        {'attendance': attendance}
+    )
