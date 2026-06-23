@@ -1,6 +1,5 @@
 from django import forms
-from .models import Employee
-from .models import Attendance
+from .models import Employee, Leave, Attendance
 
 
 class EmployeeForm(forms.ModelForm):
@@ -14,3 +13,16 @@ class AttendanceForm(forms.ModelForm):
     class Meta:
         model = Attendance
         fields = ['employee', 'date', 'status']
+
+
+class LeaveForm(forms.ModelForm):
+
+    class Meta:
+        model = Leave
+        fields = [
+            'employee',
+            'leave_type',
+            'start_date',
+            'end_date',
+            'reason'
+        ]

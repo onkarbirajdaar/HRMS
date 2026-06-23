@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Attendance, Department, Employee
-from .forms import EmployeeForm, AttendanceForm
+from .models import Attendance, Department, Employee, Leave
+from .forms import EmployeeForm, AttendanceForm, LeaveForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -126,5 +126,79 @@ def edit_attendance(request, id):
     return render(
         request,
         'employees/edit_attendance.html',
+        {'form': form}
+    )
+
+
+def delete_attendance(request, id):
+
+    attendance = get_object_or_404(
+        Attendance,
+        id=id
+    )
+
+    if request.method == 'POST':
+        attendance.delete()
+        return redirect('attendance_list')
+
+    return render(
+        request,
+        'employees/delete_attendance.html',
+        {'attendance': attendance}
+    )
+
+
+def add_leave(request):
+
+    if request.method == 'POST':
+
+        form = LeaveForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('leave_list')
+
+    else:
+        form = LeaveForm()
+
+    return render(
+        request,
+        'employees/add_leave.html',
+        {'form': form}
+    )
+
+
+def leave_list(request):
+
+    leaves = Leave.objects.all()
+
+    return render(
+        request,
+        'employees/leave_list.html',
+        {'leaves': leaves}
+    )
+
+
+def edit_leave(request, id):
+
+    leave = get_object_or_404(Leave, id=id)
+
+    if request.method == 'POST':
+
+        form = LeaveForm(
+            request.POST,
+            instance=leave
+        )
+
+        if form.is_valid():
+            form.save()
+            return redirect('leave_list')
+
+    else:
+        form = LeaveForm(instance=leave)
+
+    return render(
+        request,
+        'employees/edit_leave.html',
         {'form': form}
     )
