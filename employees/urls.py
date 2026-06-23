@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import add_attendance, add_leave, attendance_list, dashboard, delete_attendance, delete_employee, delete_leave, edit_attendance, edit_employee, edit_leave, employee_add, employee_list, leave_list
+from .views import add_attendance, add_leave, approve_leave, attendance_list, dashboard, delete_attendance, delete_employee, delete_leave, edit_attendance, edit_employee, edit_leave, employee_add, employee_list, leave_list, reject_leave
 
 urlpatterns = [
     path('', employee_list, name='employee_list'),
@@ -16,4 +16,15 @@ urlpatterns = [
     path('leave/add/', add_leave, name='add_leave'),
     path('leave/edit/<int:id>/', edit_leave, name='edit_leave'),
     path('leave/delete/<int:id>/', delete_leave, name='delete_leave'),
+    path(
+        'leave/approve/<int:id>/',
+        approve_leave,
+        name='approve_leave'
+    ),
+
+    path(
+        'leave/reject/<int:id>/',
+        reject_leave,
+        name='reject_leave'
+    ),
 ]

@@ -60,6 +60,20 @@
                 <td>{{ leave.reason }}</td>
                 <td>
                   <a
+                    href="{% url 'approve_leave' leave.id %}"
+                    class="btn btn-success btn-sm"
+                  >
+                    Approve
+                  </a>
+
+                  <a
+                    href="{% url 'reject_leave' leave.id %}"
+                    class="btn btn-secondary btn-sm"
+                  >
+                    Reject
+                  </a>
+
+                  <a
                     href="{% url 'edit_leave' leave.id %}"
                     class="btn btn-warning btn-sm"
                   >

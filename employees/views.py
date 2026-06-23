@@ -220,3 +220,29 @@ def delete_leave(request, id):
         'employees/delete_leave.html',
         {'leave': leave}
     )
+
+
+def approve_leave(request, id):
+
+    leave = get_object_or_404(
+        Leave,
+        id=id
+    )
+
+    leave.status = 'Approved'
+    leave.save()
+
+    return redirect('leave_list')
+
+
+def reject_leave(request, id):
+
+    leave = get_object_or_404(
+        Leave,
+        id=id
+    )
+
+    leave.status = 'Rejected'
+    leave.save()
+
+    return redirect('leave_list')
