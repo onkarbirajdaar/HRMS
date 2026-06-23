@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Attendance, Department, Employee
-from .forms import EmployeeForm, AttendanceForm
+from .models import Attendance, Department, Employee, Leave
+from .forms import EmployeeForm, AttendanceForm, LeaveForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -145,4 +145,35 @@ def delete_attendance(request, id):
         request,
         'employees/delete_attendance.html',
         {'attendance': attendance}
+    )
+
+
+def add_leave(request):
+
+    if request.method == 'POST':
+
+        form = LeaveForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('leave_list')
+
+    else:
+        form = LeaveForm()
+
+    return render(
+        request,
+        'employees/add_leave.html',
+        {'form': form}
+    )
+
+
+def leave_list(request):
+
+    leaves = Leave.objects.all()
+
+    return render(
+        request,
+        'employees/leave_list.html',
+        {'leaves': leaves}
     )
